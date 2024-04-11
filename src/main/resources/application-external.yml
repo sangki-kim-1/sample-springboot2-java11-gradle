@@ -3,13 +3,13 @@ spring:
     # MySQL
 #    url: jdbc:mysql://app-23d40f854d2f19bc88d7fa89fd2a3bbf-chart.50010-f7a49c.svc.cluster.local:3306/project_db?serverTimezone=Asia/Seoul
 #    username: root
-#    password: 1234
+#    password: password1!
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 
     # MariaDB
     url: jdbc:mariadb://app-23d40f854d2f19bc88d7fa89fd2a3bbf-chart.50010-f7a49c.svc.cluster.local:3306/project_db?serverTimezone=Asia/Seoul
     username: root
-    password: 1234
+    password: password1!
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
