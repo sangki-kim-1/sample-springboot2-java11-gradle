@@ -1,8 +1,8 @@
-package com.example.samplespringboot2javagradle.service;
+package com.example.samplespringboot2javagradle.service.member;
 
-import com.example.samplespringboot2javagradle.dto.MemberSaveReqDto;
-import com.example.samplespringboot2javagradle.dto.MemberUpdateReqDto;
-import com.example.samplespringboot2javagradle.dto.MemberRspDto;
+import com.example.samplespringboot2javagradle.dto.member.MemberRspDto;
+import com.example.samplespringboot2javagradle.dto.member.MemberSaveReqDto;
+import com.example.samplespringboot2javagradle.dto.member.MemberUpdateReqDto;
 import com.example.samplespringboot2javagradle.entity.MemberRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
- * <p>Member Service
+ * Member Service
  *
  * @author dongyoung.kim
  * @since 1.0
@@ -27,9 +27,7 @@ public class MemberService {
     }
 
     public MemberRspDto findMember(Long id) {
-        return memberRepository.findById(id)
-                               .map(MemberRspDto::new)
-                               .orElseGet(MemberRspDto::new);
+        return memberRepository.findById(id).map(MemberRspDto::new).orElseGet(MemberRspDto::new);
     }
 
     public List<MemberRspDto> findAllMembers() {
@@ -47,5 +45,4 @@ public class MemberService {
         memberRepository.deleteById(id);
         return true;
     }
-
 }

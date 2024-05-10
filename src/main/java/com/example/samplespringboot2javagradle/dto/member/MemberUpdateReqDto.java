@@ -1,4 +1,4 @@
-package com.example.samplespringboot2javagradle.dto;
+package com.example.samplespringboot2javagradle.dto.member;
 
 import com.example.samplespringboot2javagradle.entity.Member;
 import lombok.AccessLevel;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * <p>Member Req Dto
+ * Member Req Dto
  *
  * @author dongyoung.kim
  * @since 1.0
@@ -19,14 +19,11 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class MemberSaveReqDto {
+public class MemberUpdateReqDto {
 
     private String email;
 
-    public Member toEntity() {
-        return Member.builder()
-                     .email(email)
-                     .build();
+    public Member toEntity(Long id) {
+        return Member.builder().id(id).email(email).build();
     }
-
 }

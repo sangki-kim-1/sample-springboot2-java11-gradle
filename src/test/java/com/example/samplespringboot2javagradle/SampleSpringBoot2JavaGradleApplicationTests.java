@@ -9,7 +9,5 @@ import org.springframework.test.context.ActiveProfiles;
 class SampleSpringBoot2JavaGradleApplicationTests {
 
     @Test
-    void contextLoads() {
-    }
-
+    void contextLoads() {}
 }
