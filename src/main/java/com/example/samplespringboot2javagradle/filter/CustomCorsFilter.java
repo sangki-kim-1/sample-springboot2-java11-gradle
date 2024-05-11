@@ -1,8 +1,3 @@
-/*
- * Copyright 2024 NHN (https://nhn.com) and others.
- * © NHN Corp. All rights reserved.
- */
-
 package com.example.samplespringboot2javagradle.filter;
 
 import java.util.List;
@@ -15,8 +10,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 /**
- * <p>Custom Cors Filter
- * for allow front CORS
+ * Custom Cors Filter for allow front CORS
  *
  * @author dongyoung.kim
  * @since 1.0
@@ -43,5 +37,4 @@ public class CustomCorsFilter extends CorsFilter {
 
         return source;
     }
-
 }

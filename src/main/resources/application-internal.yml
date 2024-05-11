@@ -22,3 +22,6 @@ spring:
 logging:
   level:
     root: debug
+
+prometheus:
+  base-url: "http://localhost.ip:9090"

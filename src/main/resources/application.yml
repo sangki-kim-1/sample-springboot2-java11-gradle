@@ -1,5 +1,7 @@
 spring:
   profiles.active: internal
+  application:
+    name: sample-spring-boot2-java-gradle
 
 server:
   servlet:
@@ -30,3 +32,20 @@ springdoc:
   cache.disabled: true
   default-consumes-media-type: application/json;charset=UTF-8
   default-produces-media-type: application/json;charset=UTF-8
+
+# Actuator
+management:
+  server:
+    port: 8081
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}-${random.uuid}

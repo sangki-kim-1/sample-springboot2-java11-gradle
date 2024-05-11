@@ -1,4 +1,4 @@
-package com.example.samplespringboot2javagradle.dto;
+package com.example.samplespringboot2javagradle.dto.member;
 
 import com.example.samplespringboot2javagradle.entity.Member;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * <p>Member Response Dto
+ * Member Response Dto
  *
  * @author dongyoung.kim
  * @since 1.0
@@ -27,5 +27,4 @@ public class MemberRspDto {
         this.id = member.getId();
         this.email = member.getEmail();
     }
-
 }

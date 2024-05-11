@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * <p>Member Entity
+ * Member Entity
  *
  * @author dongyoung.kim
  * @since 1.0
@@ -32,5 +32,4 @@ public class Member {
     @Email
     @Column(unique = true, nullable = false, length = 100)
     private String email;
-
 }
