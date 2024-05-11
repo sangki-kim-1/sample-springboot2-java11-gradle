@@ -24,4 +24,4 @@ logging:
     root: debug
 
 prometheus:
-  base-url: "http://localhost:9090"
+  base-url: "http://localhost.ip:9090"
