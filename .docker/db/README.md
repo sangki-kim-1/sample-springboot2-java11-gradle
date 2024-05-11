@@ -11,13 +11,32 @@ brew install docker-compose
 
 ### 2. 도커 컴포즈 실행
 실행할 도커 컴포즈 yml 경로로 이동 후 아래 커멘드로 실행합니다.
-```shell
-docker-compose up
-```
+* foreground
+  ```shell
+  docker-compose up
+  ```
+* background
+  ```shell
+  docker-compose up -d
+  ```
 
-### 3. 도커 컴포즈 초기화
+### 3. 도커 컴포즈 중지
+도커 컴포즈 실행 중지는 아래 커멘드/단축키로 중지할 수 있습니다.
+`컨테이너에 저장된 데이터(DB 데이터) 는 유지됩니다.`
+* 커멘드(background 실행 중인 경우)
+  ```shell
+  docker-compose stop
+  ```
+* 단축키(foreground 실행 중인 경우)
+  ```
+  Ctrl + C
+  ```
+
+### 4. 도커 컴포즈 초기화
 최초 실행 후 컴포즈 파일 일부가 변경되어도 캐싱문제로 변경되지 않은 컨테이너가 실행되는 경우가 있습니다.  
-이 때, 도커 컴포즈 컨테이너를 삭제하여 초기화할 수 있습니다.
+이 때, 도커 컴포즈 컨테이너를 삭제하여 초기화할 수 있습니다.  
+
+**컨테이너가 삭제됨에 따라 내부에 저장된 데이터도 함께 삭제됩니다. 주의하세요.**
 ```shell
 docker-compose down
 ```

@@ -59,9 +59,15 @@ dependencies {
     // devtools - for live loading
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-    // feign client
+    // feign client - for api call
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'io.github.openfeign:feign-okhttp'
+
+    // actuator - for health check & use prometheus metrics api
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // prometheus - for metrics
+    implementation 'io.micrometer:micrometer-registry-prometheus:1.12.5'
 }
 
 tasks.named('test') {

@@ -21,18 +21,23 @@ public class PrometheusRestController {
 
     private final PrometheusService prometheusService;
 
-    @GetMapping("/autoscale-info")
+    @GetMapping("/k8s/autoscale-info")
     public Object getAutoscaleInfo() {
         return prometheusService.getAutoscaleInfo();
     }
 
-    @GetMapping("/cpu-usage")
+    @GetMapping("/k8s/cpu-usage")
     public Object getCpuUsage() {
         return prometheusService.getCpuUsage();
     }
 
-    @GetMapping("/memory-usage")
+    @GetMapping("/k8s/memory-usage")
     public Object getMemoryUsage() {
         return prometheusService.getMemoryUsage();
+    }
+
+    @GetMapping("/java/http-request-count")
+    public Object getHttpRequestCount() {
+        return prometheusService.getHttpRequestCount();
     }
 }

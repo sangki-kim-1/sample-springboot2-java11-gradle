@@ -27,9 +27,7 @@ public class PrometheusServiceImpl implements PrometheusService {
 
     @Override
     public Object getCpuUsage() {
-        //        var namespace = "50203-c1eeb2";
         var namespace = "apppaas";
-        //        var container = "chart";
         var container = "backoffice-be";
         var query =
                 String.format(
@@ -40,9 +38,7 @@ public class PrometheusServiceImpl implements PrometheusService {
 
     @Override
     public Object getMemoryUsage() {
-        //        var namespace = "50203-c1eeb2";
         var namespace = "apppaas";
-        //        var container = "chart";
         var container = "backoffice-be";
         var query =
                 String.format(
@@ -53,12 +49,12 @@ public class PrometheusServiceImpl implements PrometheusService {
 
     @Override
     public Object getNetworkIngress() {
-                var namespace = "50203-c1eeb2";
-                var podLike = "a82e94907805ce825825d709c83773c22.+";
+        var namespace = "50203-c1eeb2";
+        var podLike = "a82e94907805ce825825d709c83773c22.+";
         var query =
-            String.format(
-                "irate(container_network_receive_bytes_total{namespace=\"%s\", pod=~\"%s\"}[5m])",
-                namespace, podLike);
+                String.format(
+                        "irate(container_network_receive_bytes_total{namespace=\"%s\", pod=~\"%s\"}[5m])",
+                        namespace, podLike);
         return prometheusApiAdapter.queryRange(query, start, end, step);
     }
 
@@ -75,6 +71,13 @@ public class PrometheusServiceImpl implements PrometheusService {
                 String.format(
                         "kube_horizontalpodautoscaler_info{namespace=\"%s\",horizontalpodautoscaler=\"%s\"}",
                         namespace, horizontalpodautoscaler);
+        return prometheusApiAdapter.queryRange(query, start, end, step);
+    }
+
+    @Override
+    public Object getHttpRequestCount() {
+        var uri = "/api/members/v1";
+        var query = String.format("http_server_requests_seconds_count{uri=\"%s\"}", uri);
         return prometheusApiAdapter.queryRange(query, start, end, step);
     }
 }

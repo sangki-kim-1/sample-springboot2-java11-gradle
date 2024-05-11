@@ -11,8 +11,14 @@ package com.example.samplespringboot2javagradle.service.prometheus;
 public interface PrometheusService {
 
     Object getCpuUsage();
+
     Object getMemoryUsage();
+
     Object getNetworkIngress();
+
     Object getNetworkEgress();
+
     Object getAutoscaleInfo();
+
+    Object getHttpRequestCount();
 }

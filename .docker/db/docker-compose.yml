@@ -21,13 +21,13 @@ services:
     volumes:
       - ./:/docker-entrypoint-initdb.d
 
-  mariadb:
-    image: mariadb:10.3.22
-    labels:
-      - "name=mariadb"
-    environment:
-      MYSQL_ROOT_PASSWORD: "password1!"
-    ports:
-      - "13307:3306"
-    volumes:
-      - ./:/docker-entrypoint-initdb.d
+#  mariadb:
+#    image: mariadb:10.3.22
+#    labels:
+#      - "name=mariadb"
+#    environment:
+#      MYSQL_ROOT_PASSWORD: "password1!"
+#    ports:
+#      - "13307:3306"
+#    volumes:
+#      - ./:/docker-entrypoint-initdb.d
