@@ -3,6 +3,8 @@ version: '3.8'
 networks:
   monitor:
     driver: bridge
+  db:
+    driver: bridge
 services:
   prometheus:
     extends:
@@ -12,7 +14,7 @@ services:
     extends:
       file: .docker/monitoring/docker-compose.yml
       service: grafana
-  mysql:
+  db:
     extends:
       file: .docker/db/docker-compose.yml
       service: mysql
@@ -22,15 +24,17 @@ services:
       dockerfile: Dockerfile
     image: sample-spring-boot2-java-gradle
     container_name: sample-spring-boot2-java-gradle
-    hostname: server.container
     environment:
         - SPRING_PROFILES_ACTIVE=compose
+        - DB_CONTAINER_HOST=mysql-container
+        - MONITORING_CONTAINER_HOST=prometheus-container
     ports:
       - "8080:8080"
       - "8081:8081"
     networks:
       - monitor
+      - db
     depends_on:
-      - mysql
-      - grafana
+      db:
+        condition: service_healthy
     restart: always

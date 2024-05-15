@@ -19,6 +19,10 @@ spring:
   devtools:
     livereload:
       enabled: true
+  sql:
+    init:
+      platform: mysql
+      mode: always
 
 logging:
   level:

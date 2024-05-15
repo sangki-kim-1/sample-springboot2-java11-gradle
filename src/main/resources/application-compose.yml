@@ -1,7 +1,7 @@
 spring:
   datasource:
     # MySQL
-    url: jdbc:mysql://localhost.ethernet.ip:13306/project_db?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://${DB_CONTAINER_HOST}:3306/project_db?serverTimezone=Asia/Seoul
     username: root
     password: password1!
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -33,4 +33,4 @@ logging:
     root: debug
 
 prometheus:
-  base-url: "http://prometheus.container:9090"
+  base-url: http://${MONITORING_CONTAINER_HOST}:9090
