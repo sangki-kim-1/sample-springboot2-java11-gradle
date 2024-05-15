@@ -1,7 +1,7 @@
 spring:
   datasource:
     # MySQL
-    url: jdbc:mysql://localhost.ip:13306/project_db?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost.ethernet.ip:13306/project_db?serverTimezone=Asia/Seoul
     username: root
     password: password1!
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -20,7 +20,8 @@ spring:
         highlight_sql: true
         use_sql_comments: true # 실행되는 쿼리문 HINT 표시
         database-platform: org.hibernate.dialect.MySQL8Dialect
-#        database-platform: org.hibernate.dialect.MariaDB103Dialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    #        database-platform: org.hibernate.dialect.MariaDB103Dialect
     defer-datasource-initialization: true
   sql:
     init:

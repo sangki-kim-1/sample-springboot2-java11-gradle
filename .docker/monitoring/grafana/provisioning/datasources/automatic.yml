@@ -7,7 +7,7 @@ datasources:
   - name: prometheus-docker-java
     type: prometheus
     access: proxy
-    url: http://localhost.ip:9090
+    url: http://localhost.ethernet.ip:9090
     password:
     user:
     database:

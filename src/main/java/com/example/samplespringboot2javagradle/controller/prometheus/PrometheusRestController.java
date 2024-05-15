@@ -26,6 +26,11 @@ public class PrometheusRestController {
         return prometheusService.getAutoscaleInfo();
     }
 
+    @GetMapping("k8s/series")
+    public Object getSeries() {
+        return prometheusService.getSeries();
+    }
+
     @GetMapping("/k8s/cpu-usage")
     public Object getCpuUsage() {
         return prometheusService.getCpuUsage();
@@ -34,6 +39,11 @@ public class PrometheusRestController {
     @GetMapping("/k8s/memory-usage")
     public Object getMemoryUsage() {
         return prometheusService.getMemoryUsage();
+    }
+
+    @GetMapping("/k8s/network-ingress")
+    public Object getNetworkIngress() {
+        return prometheusService.getNetworkIngress();
     }
 
     @GetMapping("/java/http-request-count")
