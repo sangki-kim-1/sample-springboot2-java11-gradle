@@ -35,6 +35,13 @@ docker run -d -p 8080:8080 -p 8081:8081 sample-spring-boot-2-java-gradle
 docker-compose up
 ```
 
+### 2. 도커 컴포즈 이미지 삭제
+도커 컴포즈는 도커 이미지를 사용한 컨테이너 관리 도구이기 때문에 도커 이미지 자체에 대한 변경을 감지할 수 없습니다.
+따라서 컴포즈에 포함된 도커 이미지가 변경되는 경우(스프링 부트 파일) 이미지를 삭제하고 다시 빌드해야 합니다.
+```shell
+docker-compose build --no-cache
+```
+
 ## 99. 참고
 ### 1. 프로메테우스 - 그라파나(via. docker-compose)
 [모니터링 도커 컴포즈](.docker/monitoring/README.md)

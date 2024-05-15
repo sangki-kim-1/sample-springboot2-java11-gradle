@@ -5,4 +5,4 @@ scrape_configs:
   - job_name: 'spring-actuator'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['localhost.ip:8081'] # 도커 실행 시, localhost 대신 호스트 IP 입력(컨테이너 로컬로 설정된다.)
+      - targets: ['localhost.ethernet.ip:8081'] # 도커 실행 시, localhost 대신 호스트 IP 입력(컨테이너 로컬로 설정된다.)

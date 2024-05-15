@@ -35,4 +35,10 @@ public interface PrometheusApiAdapter {
             @RequestParam String start,
             @RequestParam String end,
             @RequestParam String step);
+
+    @GetMapping("/api/v1/series")
+    Object getSeries(
+            @RequestParam(name = "match[]") String match,
+            @RequestParam String start,
+            @RequestParam String end);
 }

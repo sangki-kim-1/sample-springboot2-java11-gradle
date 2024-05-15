@@ -23,54 +23,59 @@ public class PrometheusServiceImpl implements PrometheusService {
 
     private final String start = Instant.now().minus(7, ChronoUnit.DAYS).toString();
     private final String end = Instant.now().toString();
-    private final String step = String.format("%d%s", 1, StepUnit.MINUTE.getUnit());
+    private final String step = String.format("%d%s", 30, StepUnit.MINUTE.getUnit());
+
+    @Override
+    public Object getSeries() {
+        var pod = "a82e94907805ce825825d709c83773c";
+        var match = String.format("kube_pod_container_info{pod=~\"%s.+\", container=\"chart\"}", pod);
+        return prometheusApiAdapter.getSeries(match, start, end);
+    }
 
     @Override
     public Object getCpuUsage() {
-        var namespace = "apppaas";
-        var container = "backoffice-be";
-        var query =
-                String.format(
-                        "irate(container_cpu_usage_seconds_total{namespace=\"%s\", container=\"%s\"}[5m])",
-                        namespace, container);
+        var podLike = "a82e94907805ce825825d709c83773c22.+";
+        var query = String.format("irate(container_cpu_usage_seconds_total{pod=\"%s\"}[5m])", podLike);
         return prometheusApiAdapter.queryRange(query, start, end, step);
     }
 
     @Override
     public Object getMemoryUsage() {
-        var namespace = "apppaas";
-        var container = "backoffice-be";
+        var podLike = "a82e94907805ce825825d709c83773c22.+";
         var query =
                 String.format(
                         "max_over_time(container_memory_working_set_bytes{namespace=\"%s\", container=\"%s\"}[5m])",
-                        namespace, container);
+                        podLike);
         return prometheusApiAdapter.queryRange(query, start, end, step);
     }
 
     @Override
     public Object getNetworkIngress() {
-        var namespace = "50203-c1eeb2";
         var podLike = "a82e94907805ce825825d709c83773c22.+";
         var query =
                 String.format(
-                        "irate(container_network_receive_bytes_total{namespace=\"%s\", pod=~\"%s\"}[5m])",
-                        namespace, podLike);
+                        "sum by (serviceDomain) (label_replace(irate(container_network_receive_bytes_total{pod=~\"%s\"}[5m]),\"serviceDomain\",\"$1\",\"pod\",\"(.+)-(.+)-(.+)\"))",
+                        podLike);
         return prometheusApiAdapter.queryRange(query, start, end, step);
     }
 
     @Override
     public Object getNetworkEgress() {
-        return null;
+        var podLike = "a82e94907805ce825825d709c83773c22.+";
+        var query =
+                String.format(
+                        "sum by (serviceDomain) (label_replace(irate(container_network_transmit_bytes_total{pod=~\"%s\"}[5m]),\"serviceDomain\",\"$1\",\"pod\",\"(.+)-(.+)-(.+)\"))",
+                        podLike);
+        return prometheusApiAdapter.queryRange(query, start, end, step);
     }
 
     @Override
     public Object getAutoscaleInfo() {
-        var namespace = "apppaas";
         var horizontalpodautoscaler = "backoffice-be";
         var query =
                 String.format(
-                        "kube_horizontalpodautoscaler_info{namespace=\"%s\",horizontalpodautoscaler=\"%s\"}",
-                        namespace, horizontalpodautoscaler);
+                        "kube_horizontalpodautoscaler_info{horizontalpodautoscaler=\"%s\"}",
+                        horizontalpodautoscaler);
         return prometheusApiAdapter.queryRange(query, start, end, step);
     }
 
