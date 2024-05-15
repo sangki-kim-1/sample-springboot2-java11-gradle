@@ -23,7 +23,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: sample-spring-boot2-java-gradle
-    container_name: sample-spring-boot2-java-gradle
+    container_name: server-container
     environment:
         - SPRING_PROFILES_ACTIVE=compose
         - DB_CONTAINER_HOST=mysql-container
