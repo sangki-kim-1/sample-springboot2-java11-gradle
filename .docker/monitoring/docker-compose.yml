@@ -6,10 +6,9 @@ services:
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus-container
-    user: "501" # PV 에 쓰기 가능한 uid(예, 로그인 계정 uid) 설정
+#    user: "501" # PV 설정 시 사용, 쓰기 가능한 uid(예, 로그인 계정 uid) 설정
     volumes:
-      - ./prometheus/:/etc/prometheus/
-      - ./prometheus/data:/prometheus
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     expose:
       - "9090"
     ports:
@@ -24,8 +23,7 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=password1!
       - GF_USERS_ALLOW_SIGN_UP=false
     volumes:
-      - ./grafana:/var/lib/grafana
-      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/provisioning/datasources/automatic.yml:/etc/grafana/provisioning/datasources/automatic.yml
     ports:
       - "3000:3000"
     depends_on:
