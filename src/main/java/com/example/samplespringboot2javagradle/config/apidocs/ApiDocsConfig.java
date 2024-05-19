@@ -1,4 +1,4 @@
-package com.example.samplespringboot2javagradle.config.swagger;
+package com.example.samplespringboot2javagradle.config.apidocs;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 1.0
  */
 @Configuration
-public class SpringDocConfig {
+public class ApiDocsConfig {
 
     @Bean
     public OpenAPI openApi(

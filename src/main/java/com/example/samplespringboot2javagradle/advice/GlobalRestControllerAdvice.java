@@ -5,9 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.concurrent.atomic.AtomicReference;
+import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -42,6 +46,32 @@ public class GlobalRestControllerAdvice {
             log.error("ResponseBody logging failed!", e2);
         }
         return ResponseEntity.status(e.status()).body(e.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleMethodArgumentNotValidException(
+            MethodArgumentNotValidException e) {
+        log.error("Method argument not valid exception occurred", e);
+        var firstMessage = new AtomicReference<>("");
+        e.getBindingResult().getAllErrors().stream()
+                .findFirst()
+                .map(
+                        error ->
+                                (error instanceof org.springframework.validation.FieldError)
+                                        ? (FieldError) error
+                                        : null)
+                .ifPresent(error -> firstMessage.set(error.getDefaultMessage()));
+        return ResponseEntity.badRequest().body(firstMessage);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException e) {
+        log.error("Constraint violation exception occurred", e);
+        var firstMessage = new AtomicReference<>("");
+        e.getConstraintViolations().stream()
+                .findFirst()
+                .ifPresent(v -> firstMessage.set(v.getMessage()));
+        return ResponseEntity.badRequest().body(firstMessage);
     }
 
     private Object deSerializer(ByteBuffer byteBuffer) {

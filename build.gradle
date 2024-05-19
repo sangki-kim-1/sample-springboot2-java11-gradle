@@ -1,11 +1,11 @@
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.15'
-    id("com.diffplug.spotless") version("6.11.0")
+    id("com.diffplug.spotless") version("6.11.0") // 코드 포맷팅
 }
 
 apply plugin: 'io.spring.dependency-management'
-compileJava.dependsOn 'spotlessApply'
+compileJava.dependsOn 'spotlessApply' // 자바 컴파일 전 코드 포맷팅 커멘드 실행
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -68,6 +68,10 @@ dependencies {
 
     // prometheus - for metrics
     implementation 'io.micrometer:micrometer-registry-prometheus:1.12.5'
+
+    // Spring security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {

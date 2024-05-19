@@ -1,13 +1,16 @@
 package com.example.samplespringboot2javagradle.service.member;
 
+import com.example.samplespringboot2javagradle.consts.entity.MemberStatus;
 import com.example.samplespringboot2javagradle.dto.member.MemberRspDto;
 import com.example.samplespringboot2javagradle.dto.member.MemberSaveReqDto;
 import com.example.samplespringboot2javagradle.dto.member.MemberUpdateReqDto;
-import com.example.samplespringboot2javagradle.entity.MemberRepository;
+import com.example.samplespringboot2javagradle.repository.member.MemberRepository;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Member Service
@@ -20,10 +23,14 @@ import org.springframework.stereotype.Service;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public MemberRspDto saveMember(MemberSaveReqDto memberReqDto) {
-        var member = memberRepository.save(memberReqDto.toEntity());
-        return new MemberRspDto(member);
+        var encodedPassword = passwordEncoder.encode(memberReqDto.getPassword());
+        var member = memberReqDto.toEntity();
+        member.setPassword(encodedPassword);
+        var savedMember = memberRepository.save(member);
+        return new MemberRspDto(savedMember);
     }
 
     public MemberRspDto findMember(Long id) {
@@ -36,13 +43,32 @@ public class MemberService {
         return members;
     }
 
+    @Transactional
     public MemberRspDto updateMember(Long id, MemberUpdateReqDto memberReqDto) {
-        var member = memberRepository.save(memberReqDto.toEntity(id));
-        return new MemberRspDto(member);
+        var isExist = memberRepository.existsByIdAndStatus(id, MemberStatus.ACTIVE);
+        if (!isExist) {
+            throw new IllegalArgumentException("Member is not exist or deleted. id: " + id);
+        }
+        var encodedPassword = passwordEncoder.encode(memberReqDto.getPassword());
+        var member = memberReqDto.toEntity(id);
+        member.setPassword(encodedPassword);
+        var updatedMember = memberRepository.save(member);
+        return new MemberRspDto(updatedMember);
     }
 
-    public boolean deleteMember(Long id) {
-        memberRepository.deleteById(id);
-        return true;
+    @Transactional
+    public MemberRspDto deleteMember(Long id) {
+        return memberRepository
+                .findById(id)
+                .filter(member -> MemberStatus.ACTIVE.equals(member.getStatus()))
+                .map(
+                        member -> {
+                            member.setStatus(MemberStatus.DELETED);
+                            return memberRepository.save(member);
+                        })
+                .map(MemberRspDto::new)
+                .orElseThrow(
+                        () ->
+                                new IllegalArgumentException("Member is not exist or already deleted. id: " + id));
     }
 }
