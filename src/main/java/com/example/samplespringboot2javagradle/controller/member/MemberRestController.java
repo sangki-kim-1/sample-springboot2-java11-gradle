@@ -7,8 +7,9 @@ import com.example.samplespringboot2javagradle.service.member.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author dongyoung.kim
  * @since 1.0
  */
-@Tag(name = "Member Controller", description = "DB CRUD용 회원 컨트롤러")
 @RequestMapping("api/members/v1")
 @RequiredArgsConstructor
 @RestController
@@ -39,7 +39,7 @@ public class MemberRestController {
             })
     @Operation(summary = "회원 저장", description = "회원 데이터 저장 API")
     @PostMapping
-    public MemberRspDto saveMember(@RequestBody MemberSaveReqDto memberReqDto) {
+    public MemberRspDto saveMember(@Valid @RequestBody MemberSaveReqDto memberReqDto) {
         return memberService.saveMember(memberReqDto);
     }
 
@@ -47,7 +47,7 @@ public class MemberRestController {
             value = {
                 @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true),
             })
-    @Operation(summary = "회원 조회", description = "1~5까지 샘플 데이터로 조회됩니다.")
+    @Operation(summary = "회원 조회", description = "회원 단건 조회(상태 구분X)")
     @GetMapping("{id}")
     public MemberRspDto findMember(@PathVariable Long id) {
         return memberService.findMember(id);
@@ -57,7 +57,7 @@ public class MemberRestController {
             value = {
                 @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true),
             })
-    @Operation(summary = "회원 전체 조회")
+    @Operation(summary = "회원 전체 조회", description = "회원 전체 조회(상태 구분X)")
     @GetMapping
     public List<MemberRspDto> findAllMembers() {
         return memberService.findAllMembers();
@@ -67,10 +67,10 @@ public class MemberRestController {
             value = {
                 @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true),
             })
-    @Operation(summary = "회원 수정", description = "회원 데이터 수정 API")
+    @Operation(summary = "회원 수정", description = "회원 데이터 수정(활성화된 회원만 수정 가능)")
     @PutMapping("{id}")
     public MemberRspDto updateMember(
-            @PathVariable Long id, @RequestBody MemberUpdateReqDto memberReqDto) {
+            @PathVariable Long id, @Valid @RequestBody MemberUpdateReqDto memberReqDto) {
         return memberService.updateMember(id, memberReqDto);
     }
 
@@ -78,9 +78,23 @@ public class MemberRestController {
             value = {
                 @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true),
             })
-    @Operation(summary = "회원 삭제", description = "회원 데이터 삭제 API")
+    @Operation(summary = "회원 삭제", description = "활성화된 회원만 삭제 가능, 삭제 시 상태 변경(하드 딜리트 X)")
     @DeleteMapping("{id}")
-    public boolean deleteMember(@PathVariable Long id) {
+    public MemberRspDto deleteMember(@PathVariable Long id) {
         return memberService.deleteMember(id);
+    }
+
+    @ApiResponses(
+            value = {
+                @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true),
+            })
+    @Operation(summary = "로그아웃")
+    @GetMapping("logout")
+    public boolean logout(HttpServletRequest request) {
+        var session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return true;
     }
 }

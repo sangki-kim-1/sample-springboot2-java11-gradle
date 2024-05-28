@@ -1,6 +1,11 @@
 package com.example.samplespringboot2javagradle.dto.member;
 
-import com.example.samplespringboot2javagradle.entity.Member;
+import com.example.samplespringboot2javagradle.consts.entity.MemberRole;
+import com.example.samplespringboot2javagradle.consts.entity.MemberStatus;
+import com.example.samplespringboot2javagradle.entity.member.Member;
+import java.util.List;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,9 +26,16 @@ import lombok.ToString;
 @AllArgsConstructor
 public class MemberSaveReqDto {
 
-    private String email;
+    @NotNull @Email private String email;
+
+    @NotNull private String password;
 
     public Member toEntity() {
-        return Member.builder().email(email).build();
+        return Member.builder()
+                .email(email)
+                .password(password)
+                .roleList(List.of(MemberRole.USER))
+                .status(MemberStatus.ACTIVE)
+                .build();
     }
 }

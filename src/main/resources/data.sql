@@ -1,5 +1,2 @@
-INSERT INTO members values (1, 'email1@sample.com');
-INSERT INTO members values (2, 'email2@sample.com');
-INSERT INTO members values (3, 'email3@sample.com');
-INSERT INTO members values (4, 'email4@sample.com');
-INSERT INTO members values (5, 'email5@sample.com');
+INSERT INTO members values (1, 'admin@email.com', '$2a$12$xwU7pCwIVFxVPdDiSFLEqeIKi0p9S9gXwPnpO2cNDV/eFfOXKEEJ2', 'USER,ADMIN', 1);
+INSERT INTO members values (2, 'user@email.com', '$2a$12$/RD2VTBGqM6wD0KNOsNiTuuGDpLWl2xTXhmuScThnW7Xjc0Vc1J3u', 'USER', 1);
