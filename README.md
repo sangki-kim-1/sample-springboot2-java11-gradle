@@ -77,6 +77,4 @@ password: user1234
 
 # 99. 참고
 ## 1. 코드 포맷팅 - spotless
-- spotless 플러그인을 통해 빌드 과정에서 코드 포맷을 검사하고 통일할 수 있도록 조절
-- build.gradle 에 아래 컴파일 옵션을 추가하여 build task 실행 전 `spotlessApply` 실행되도록 적용함.
-  `compileJava.dependsOn 'spotlessApply`
+- spotless 플러그인을 통해 빌드 과정에서 코드 포맷을 검사하고 통일할 수 있도록 설정함
