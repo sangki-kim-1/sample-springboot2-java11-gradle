@@ -1,5 +1,6 @@
 package com.example.samplespringboot2javagradle.config.security;
 
+import com.example.samplespringboot2javagradle.consts.entity.MemberRole;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
 import java.util.List;
@@ -35,6 +36,7 @@ public class SecurityConfiguration {
     private static final String LOGIN_SUCCESS = "/";
     private static final String LOGOUT = "/logout";
     private static final String LOGOUT_SUCCESS = LOGIN;
+    private static final String API_DOCS = "/api-docs**/**";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -64,10 +66,12 @@ public class SecurityConfiguration {
                                 .permitAll()
                                 .antMatchers(HttpMethod.GET, LOGIN)
                                 .permitAll()
+                                .antMatchers(HttpMethod.GET, API_DOCS)
+                                .hasAuthority(MemberRole.ADMIN.name())
                                 .mvcMatchers(String.valueOf(PathRequest.toStaticResources().atCommonLocations()))
                                 .permitAll()
                                 .anyRequest()
-                                .authenticated());
+                                .hasAuthority(MemberRole.USER.name()));
         httpSecurity.logout(
                 configurer ->
                         configurer
