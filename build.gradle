@@ -5,7 +5,6 @@ plugins {
 }
 
 apply plugin: 'io.spring.dependency-management'
-compileJava.dependsOn 'spotlessApply' // 자바 컴파일 전 코드 포맷팅 커멘드 실행
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
