@@ -1,10 +1,13 @@
 package com.example.samplespringboot2javagradle.controller.member;
 
+import com.example.samplespringboot2javagradle.config.security.UserAuthentication;
+import com.example.samplespringboot2javagradle.config.security.UserDetailsImpl;
+import com.example.samplespringboot2javagradle.dto.member.MemberChangePasswordReqDto;
 import com.example.samplespringboot2javagradle.dto.member.MemberRspDto;
 import com.example.samplespringboot2javagradle.dto.member.MemberSaveReqDto;
-import com.example.samplespringboot2javagradle.dto.member.MemberUpdateReqDto;
 import com.example.samplespringboot2javagradle.service.member.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.List;
@@ -67,11 +70,12 @@ public class MemberRestController {
             value = {
                 @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true),
             })
-    @Operation(summary = "회원 수정", description = "회원 데이터 수정(활성화된 회원만 수정 가능)")
-    @PutMapping("{id}")
-    public MemberRspDto updateMember(
-            @PathVariable Long id, @Valid @RequestBody MemberUpdateReqDto memberReqDto) {
-        return memberService.updateMember(id, memberReqDto);
+    @Operation(summary = "비밀번호 수정", description = "활성화된 회원만 수정 가능")
+    @PutMapping("password")
+    public MemberRspDto changePassword(
+            @Parameter(hidden = true) @UserAuthentication UserDetailsImpl userDetails,
+            @Valid @RequestBody MemberChangePasswordReqDto reqDto) {
+        return memberService.changePassword(userDetails.getMember().getId(), reqDto);
     }
 
     @ApiResponses(

@@ -1,6 +1,7 @@
 package com.example.samplespringboot2javagradle.config.security;
 
 import com.example.samplespringboot2javagradle.consts.entity.MemberRole;
+import com.example.samplespringboot2javagradle.filter.AuthenticationProcessingFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
 import java.util.List;

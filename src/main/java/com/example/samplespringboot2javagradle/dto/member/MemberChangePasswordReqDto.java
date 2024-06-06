@@ -1,6 +1,5 @@
 package com.example.samplespringboot2javagradle.dto.member;
 
-import com.example.samplespringboot2javagradle.entity.member.Member;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -20,11 +19,8 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class MemberUpdateReqDto {
+public class MemberChangePasswordReqDto {
 
-    @NotNull private String password;
-
-    public Member toEntity(Long id) {
-        return Member.builder().id(id).password(password).build();
-    }
+    @NotNull private String currentPassword;
+    @NotNull private String newPassword;
 }

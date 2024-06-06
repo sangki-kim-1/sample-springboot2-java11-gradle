@@ -2,6 +2,7 @@ package com.example.samplespringboot2javagradle.entity.member;
 
 import com.example.samplespringboot2javagradle.consts.entity.MemberRole;
 import com.example.samplespringboot2javagradle.consts.entity.MemberStatus;
+import com.example.samplespringboot2javagradle.entity.BaseEntity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
@@ -16,7 +17,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.Comment;
 
 /**
@@ -26,11 +26,11 @@ import org.hibernate.annotations.Comment;
  * @since 1.0
  */
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "members")
-public class Member implements Serializable {
+public class Member extends BaseEntity implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -41,7 +41,6 @@ public class Member implements Serializable {
     @Column(unique = true, nullable = false, length = 100)
     private String email;
 
-    @Setter
     @Comment("비밀번호")
     @Column(nullable = false, length = 100)
     private String password;
@@ -51,7 +50,6 @@ public class Member implements Serializable {
     @Column(nullable = false, length = 50)
     private List<MemberRole> roleList;
 
-    @Setter
     @Convert(converter = MemberStatusConverter.class)
     @Comment("회원 상태")
     @Column(nullable = false, length = 1)

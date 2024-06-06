@@ -1,4 +1,4 @@
-package com.example.samplespringboot2javagradle.config.security;
+package com.example.samplespringboot2javagradle.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -56,8 +56,16 @@ public class AuthenticationProcessingFilter extends OncePerRequestFilter {
                         bodyString);
             }
             responseWrapper.copyBodyToResponse();
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage(), e);
+            if (responseWrapper.getStatus() == HttpStatus.OK.value()) {
+                response.setStatus(HttpStatus.BAD_REQUEST.value());
+            }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
+            if (responseWrapper.getStatus() == HttpStatus.OK.value()) {
+                response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            }
         }
     }
 
