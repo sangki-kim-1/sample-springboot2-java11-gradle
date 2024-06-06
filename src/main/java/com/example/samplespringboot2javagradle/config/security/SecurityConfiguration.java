@@ -72,7 +72,7 @@ public class SecurityConfiguration {
                                 .mvcMatchers(String.valueOf(PathRequest.toStaticResources().atCommonLocations()))
                                 .permitAll()
                                 .anyRequest()
-                                .hasAuthority(MemberRole.USER.name()));
+                                .authenticated());
         httpSecurity.logout(
                 configurer ->
                         configurer
