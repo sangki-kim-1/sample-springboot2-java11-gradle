@@ -13,8 +13,6 @@ spring:
         format_sql: true # SQL 개행
         highlight_sql: true
         use_sql_comments: true # 실행되는 쿼리문 HINT 표시
-        dialect: org.hibernate.dialect.MySQL8Dialect
-    database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
   devtools:
     livereload:

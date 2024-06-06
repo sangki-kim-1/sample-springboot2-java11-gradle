@@ -1,5 +1,6 @@
 package com.example.samplespringboot2javagradle.dto.member;
 
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,9 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- *
- *
- * <h3>Member Update Req Dto</h3>
+ * Member Req Dto
  *
  * @author dongyoung.kim
  * @since 1.0
@@ -20,8 +19,8 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class MemberUpdateReqDto {
+public class MemberChangePasswordReqDto {
 
-    private String email;
-    private String password;
+    @NotNull private String currentPassword;
+    @NotNull private String newPassword;
 }

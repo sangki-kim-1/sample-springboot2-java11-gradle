@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum MemberStatus {
     ACTIVE(1L),
-    DELETED(2L),
+    WITHDRAW(2L),
     ;
     private final Long code;
 
