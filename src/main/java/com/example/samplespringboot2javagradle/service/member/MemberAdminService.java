@@ -18,7 +18,7 @@ import org.springframework.data.domain.PageRequest;
 public interface MemberAdminService {
   MemberAdminRspDto saveMember(MemberSaveReqDto reqDto);
 
-  MemberAdminRspDto findMember(Long id);
+  MemberAdminRspDto get(Long id);
 
   List<MemberAdminRspDto> findAllMembers();
 

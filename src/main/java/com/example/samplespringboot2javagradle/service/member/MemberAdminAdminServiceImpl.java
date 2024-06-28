@@ -43,7 +43,7 @@ public class MemberAdminAdminServiceImpl implements MemberAdminService {
   }
 
   @Override
-  public MemberAdminRspDto findMember(Long id) {
+  public MemberAdminRspDto get(Long id) {
     return memberJpaRepository
         .findById(id)
         .map(MemberAdminRspDto::new)
