@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -18,29 +19,30 @@ import lombok.ToString;
  * @since 1.0
  */
 @ToString
+@Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class MemberAdminRspDto {
 
-    private Long id;
-    private String email;
-    private List<MemberRole> roleList;
-    private MemberStatus status;
-    private Long createdBy;
-    private LocalDateTime createdDate;
-    private Long lastModifiedBy;
-    private LocalDateTime lastModifiedDate;
+  private Long id;
+  private String email;
+  private List<MemberRole> roleList;
+  private MemberStatus status;
+  private Long createdBy;
+  private LocalDateTime createdDate;
+  private Long lastModifiedBy;
+  private LocalDateTime lastModifiedDate;
 
-    public MemberAdminRspDto(Member member) {
-        this.id = member.getId();
-        this.email = member.getEmail();
-        this.roleList = member.getRoleList();
-        this.status = member.getStatus();
-        this.createdBy = member.getCreatedBy();
-        this.createdDate = member.getCreatedDate();
-        this.lastModifiedBy = member.getLastModifiedBy();
-        this.lastModifiedDate = member.getLastModifiedDate();
-    }
+  public MemberAdminRspDto(Member member) {
+    this.id = member.getId();
+    this.email = member.getEmail();
+    this.roleList = member.getRoleList();
+    this.status = member.getStatus();
+    this.createdBy = member.getCreatedBy();
+    this.createdDate = member.getCreatedDate();
+    this.lastModifiedBy = member.getLastModifiedBy();
+    this.lastModifiedDate = member.getLastModifiedDate();
+  }
 }
