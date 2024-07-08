@@ -35,7 +35,7 @@ public class MemberAdminAdminServiceImpl implements MemberAdminService {
   @Override
   public MemberAdminRspDto saveMember(MemberSaveReqDto memberReqDto) {
     var encodedPassword = passwordEncoder.encode(memberReqDto.getPassword());
-    var roleList = List.of(MemberRole.USER);
+    var roleList = List.of(MemberRole.ROLE_USER);
     var member =
         memberReqDto.toEntity().toBuilder().password(encodedPassword).roleList(roleList).build();
     var savedMember = memberJpaRepository.save(member);

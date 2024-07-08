@@ -11,7 +11,13 @@ import org.springframework.stereotype.Service
 class TestUserDetailsServiceImpl implements UserDetailsService {
     @Override
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        def member = MemberFixture.userDetails(username, ["ROLE_USER"] as String)
+        def roleList = []
+        if (usename == 'user@email.com') {
+            roleList = ["ROLE_USER"]
+        } else if (username == 'admin@email.com') {
+            roleList = ["ROLE_ADMIN"]
+        }
+        def member = MemberFixture.userDetails(username, roleList as String)
         return new UserDetailsImpl(member)
     }
 }

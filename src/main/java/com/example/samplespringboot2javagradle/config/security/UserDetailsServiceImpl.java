@@ -19,6 +19,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     return memberJpaRepository
         .findByEmailAndStatus(username, MemberStatus.ACTIVE)
         .map(UserDetailsImpl::new)
-        .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+        .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다. username: " + username));
   }
 }

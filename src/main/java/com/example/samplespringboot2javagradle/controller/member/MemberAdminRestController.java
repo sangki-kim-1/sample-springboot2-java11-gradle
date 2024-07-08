@@ -43,8 +43,7 @@ public class MemberAdminRestController {
         @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true),
       })
   @Operation(summary = "회원 저장", description = "회원 데이터 저장 API")
-  @PreAuthorize(
-      "hasRole('#{T(com.example.samplespringboot2javagradle.config.security.RoleType).ADMIN}')")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping
   public MemberAdminRspDto saveMember(@Valid @RequestBody MemberSaveReqDto memberReqDto) {
     return memberAdminService.saveMember(memberReqDto);
@@ -55,8 +54,7 @@ public class MemberAdminRestController {
         @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true),
       })
   @Operation(summary = "회원 조회", description = "회원 단건 조회(상태 구분X)")
-  @PreAuthorize(
-      "hasRole('#{T(com.example.samplespringboot2javagradle.config.security.RoleType).ADMIN}')")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping("{id}")
   public MemberAdminRspDto get(@PathVariable Long id) {
     return memberAdminService.get(id);
@@ -67,15 +65,18 @@ public class MemberAdminRestController {
         @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true),
       })
   @Operation(summary = "회원 전체 조회", description = "회원 전체 조회(상태 구분X)")
-  @PreAuthorize(
-      "hasRole('#{T(com.example.samplespringboot2javagradle.config.security.RoleType).ADMIN}')")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping
   public List<MemberAdminRspDto> findAllMembers() {
     return memberAdminService.findAllMembers();
   }
 
-  @PreAuthorize(
-      "hasRole('#{T(com.example.samplespringboot2javagradle.config.security.RoleType).ADMIN}')")
+  @ApiResponses(
+      value = {
+        @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true),
+      })
+  @Operation(summary = "회원 페이징 조회")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping("page")
   public Page<MemberAdminRspDto> findPage(@RequestParam int page, @RequestParam int size) {
     var pageRequest = PageRequest.of(page, size);
@@ -87,8 +88,7 @@ public class MemberAdminRestController {
         @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true),
       })
   @Operation(summary = "회원 수정", description = "회원 데이터 수정 API")
-  @PreAuthorize(
-      "hasRole('#{T(com.example.samplespringboot2javagradle.config.security.RoleType).ADMIN}')")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping("{id}")
   public MemberAdminRspDto updateMember(
       @PathVariable Long id, @RequestBody MemberUpdateReqDto reqDto) {
@@ -100,8 +100,7 @@ public class MemberAdminRestController {
         @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true),
       })
   @Operation(summary = "회원 삭제", description = "활성화된 회원만 삭제 가능, 삭제 시 상태 변경(하드 딜리트 X)")
-  @PreAuthorize(
-      "hasRole('#{T(com.example.samplespringboot2javagradle.config.security.RoleType).ADMIN}')")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @DeleteMapping("{id}")
   public void deleteMember(@PathVariable Long id) {
     memberAdminService.deleteMember(id);
@@ -112,8 +111,7 @@ public class MemberAdminRestController {
         @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true),
       })
   @Operation(summary = "강제 로그아웃", description = "api docs 에서 어드민 사용자가 로그아웃하기 위한 API")
-  @PreAuthorize(
-      "hasRole('#{T(com.example.samplespringboot2javagradle.config.security.RoleType).ADMIN}')")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping("logout")
   public boolean logout(HttpServletRequest request) {
     var session = request.getSession(false);

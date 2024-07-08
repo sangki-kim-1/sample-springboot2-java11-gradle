@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -28,6 +29,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -69,7 +71,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.GET, LOGIN)
                 .permitAll()
                 .antMatchers(HttpMethod.GET, API_DOCS)
-                .hasAuthority(MemberRole.ADMIN.name())
+                .hasAuthority(MemberRole.ROLE_ADMIN.name())
                 .mvcMatchers(String.valueOf(PathRequest.toStaticResources().atCommonLocations()))
                 .permitAll()
                 .anyRequest()

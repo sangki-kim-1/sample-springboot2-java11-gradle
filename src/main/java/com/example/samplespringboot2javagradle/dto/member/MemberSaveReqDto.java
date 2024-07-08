@@ -34,7 +34,7 @@ public class MemberSaveReqDto {
     return Member.builder()
         .email(email)
         .password(password)
-        .roleList(List.of(MemberRole.USER))
+        .roleList(List.of(MemberRole.ROLE_USER))
         .status(MemberStatus.ACTIVE)
         .build();
   }

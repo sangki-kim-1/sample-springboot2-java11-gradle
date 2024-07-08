@@ -49,12 +49,12 @@ docker-compose build --no-cache
 > 스프링 시큐리티가 적용되어있어 로그인이 필요합니다.
 > 기본 계정은 아래와 같습니다.
 ```
-// 어드민 계정 - 권한: ADMIN, USER
+// 어드민 계정 - ROLE_ADMIN
 username: admin@email.com
 password: admin1234
 ```
 ```
-// 사용자 계정 - 권한: USER
+// 사용자 계정 - ROLE_USER
 username: user@email.com
 password: user1234
 ```

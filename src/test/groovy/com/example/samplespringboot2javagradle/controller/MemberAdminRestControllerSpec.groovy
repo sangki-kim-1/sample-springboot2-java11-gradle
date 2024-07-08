@@ -32,7 +32,7 @@ class MemberAdminRestControllerSpec extends Specification {
     @SpringBean
     MemberAdminService memberAdminService = Mock()
 
-    @WithCustomMockUser(username = "admin@email.com", roles = ["ADMIN", "USER"])
+    @WithCustomMockUser(username = "admin@email.com", roles = ["ROLE_ADMIN"])
     def "findMember() 성공"() {
         given:
         def id = 1L
@@ -55,7 +55,7 @@ class MemberAdminRestControllerSpec extends Specification {
         got == response
     }
 
-    @WithCustomMockUser(username = "admin@email.com", roles = ["USER"])
+    @WithCustomMockUser(username = "user@email.com", roles = ["ROLE_USER"])
     def "findMember() 실패 - 권한 없음"() {
         given:
         def id = 1L
