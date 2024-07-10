@@ -1,6 +1,7 @@
 package com.example.samplespringboot2javagradle
 
 import com.example.samplespringboot2javagradle.config.security.UserDetailsImpl
+import com.example.samplespringboot2javagradle.consts.entity.MemberRole
 import com.example.samplespringboot2javagradle.fixture.MemberFixture
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -11,13 +12,14 @@ import org.springframework.stereotype.Service
 class TestUserDetailsServiceImpl implements UserDetailsService {
     @Override
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        def roleList = []
-        if (usename == 'user@email.com') {
-            roleList = ["ROLE_USER"]
-        } else if (username == 'admin@email.com') {
-            roleList = ["ROLE_ADMIN"]
+        def member
+        if (usename == MemberFixture.adminMember().email) {
+            member = MemberFixture.adminMember()
+        } else if (username == MemberFixture.userMember().email) {
+            member = MemberFixture.userMember()
+        } else {
+            member = MemberFixture.userDetails(username, _ as MemberRole)
         }
-        def member = MemberFixture.userDetails(username, roleList as String)
         return new UserDetailsImpl(member)
     }
 }

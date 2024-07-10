@@ -71,7 +71,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.GET, LOGIN)
                 .permitAll()
                 .antMatchers(HttpMethod.GET, API_DOCS)
-                .hasAuthority(MemberRole.ROLE_ADMIN.name())
+                .hasRole(MemberRole.ROLE_ADMIN.getRoleName())
                 .mvcMatchers(String.valueOf(PathRequest.toStaticResources().atCommonLocations()))
                 .permitAll()
                 .anyRequest()

@@ -2,7 +2,7 @@ package com.example.samplespringboot2javagradle
 
 import com.example.samplespringboot2javagradle.config.security.UserDetailsImpl
 import com.example.samplespringboot2javagradle.fixture.MemberFixture
-import java.util.Arrays
+
 import java.util.stream.Collectors
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -14,12 +14,11 @@ class WithCustomSecurityContextFactory implements WithSecurityContextFactory<Wit
     @Override
     SecurityContext createSecurityContext(WithCustomMockUser annotation) {
         var username = annotation.username()
-        var roles = annotation.roles()
-        var user = MemberFixture.userDetails(username, roles)
+        var roleList = annotation.roleList()
+        var user = MemberFixture.userDetails(username, roleList)
         var userDetailsImpl = new UserDetailsImpl(user)
-        var authorities = Arrays.stream(roles).map(SimpleGrantedAuthority::new).collect(Collectors.toList())
         var token =
-                new UsernamePasswordAuthenticationToken(userDetailsImpl, "password", authorities)
+                new UsernamePasswordAuthenticationToken(userDetailsImpl, "password", userDetailsImpl.authorities)
         SecurityContext context = SecurityContextHolder.getContext()
         context.setAuthentication (token)
         return context

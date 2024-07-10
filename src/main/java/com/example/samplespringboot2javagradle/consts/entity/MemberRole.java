@@ -1,17 +1,18 @@
 package com.example.samplespringboot2javagradle.consts.entity;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-/**
- *
- *
- * <h3>Member role</h3>
- *
- * @author dongyoung.kim
- * @since 1.0
- */
 @Getter
+@RequiredArgsConstructor
 public enum MemberRole {
-  ROLE_ADMIN,
-  ROLE_USER
+  ROLE_ADMIN(new String[] {"READ_ALL", "WRITE_ALL", "UPDATE_ALL", "DELETE_ALL"}),
+  ROLE_USER(new String[] {"READ_ACCESSIBLE", "WRITE_ACCESSIBLE", "UPDATE_ACCESSIBLE"}),
+  ;
+
+  private final String[] authorities;
+
+  public String getRoleName() {
+    return this.name().replace("ROLE_", "");
+  }
 }

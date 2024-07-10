@@ -13,9 +13,6 @@ logging:
   charset:
     console: UTF-8
     file: UTF-8
-  pattern:
-    console: "[%d{HH:mm:ss.SSS}][%-5level][%.38t][%logger{39}#%method:%line] - %msg%n"
-    file: "[%d{HH:mm:ss.SSS}][%-5level][%.38t][%logger{39}#%method:%line] - %msg%n"
 
 # swagger doc
 springdoc:

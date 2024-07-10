@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.samplespringboot2javagradle.TestConfig
 import com.example.samplespringboot2javagradle.WithCustomMockUser
+import com.example.samplespringboot2javagradle.consts.entity.MemberRole
 import com.example.samplespringboot2javagradle.controller.member.MemberAdminRestController
 import com.example.samplespringboot2javagradle.dto.member.MemberAdminRspDto
 import com.example.samplespringboot2javagradle.service.member.MemberAdminService
@@ -29,25 +30,22 @@ class MemberAdminRestControllerSpec extends Specification {
     @Autowired
     ObjectMapper objectMapper
 
-    @SpringBean
-    MemberAdminService memberAdminService = Mock()
-
-    @WithCustomMockUser(username = "admin@email.com", roles = ["ROLE_ADMIN"])
+    @WithCustomMockUser(username = "admin@email.com", roleList = [MemberRole.ROLE_ADMIN])
     def "findMember() 성공"() {
         given:
         def id = 1L
         def response = MemberAdminRspDto.builder()
-            .id(id)
-            .build()
+                .id(id)
+                .build()
         memberAdminService.get(_) >> response
 
         when:
         def contentAsString = mvc.perform(get("/api/members/v1/admin/{id}", id)
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andReturn()
-            .response
-            .contentAsString
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .response
+                .contentAsString
         def got = objectMapper.readValue(contentAsString, MemberAdminRspDto)
 
         then:
@@ -55,7 +53,10 @@ class MemberAdminRestControllerSpec extends Specification {
         got == response
     }
 
-    @WithCustomMockUser(username = "user@email.com", roles = ["ROLE_USER"])
+    @SpringBean
+    MemberAdminService memberAdminService = Mock()
+
+    @WithCustomMockUser(username = "user@email.com", roleList = [MemberRole.ROLE_USER])
     def "findMember() 실패 - 권한 없음"() {
         given:
         def id = 1L
