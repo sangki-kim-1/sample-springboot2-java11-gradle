@@ -106,3 +106,7 @@ spotless {
         excludeJava()
     }
 }
+
+bootJar {
+    enabled = false
+}
